@@ -2,15 +2,15 @@ import { Link, useHistory } from "react-router-dom";
 import HeroDetail from "../pages/HeroDetail";
 
 function HeroesCard(props) {
-  const history = useHistory();
-
   return (
     <div className="col-sm-6 col-md-4">
       <a href="">
         <Link
           to={{
             pathname: `/heroes/${props.hero._id}`,
-            data: props.hero.assets.image,
+            state: {
+              heroImg: props.hero.image,
+            },
           }}
         >
           <div
