@@ -8,9 +8,9 @@ export default function Heroes() {
   const [searchHero, setSearchHero] = useState("");
   const search = useSelector((state) => state.heroesReducer.search);
   const heroes = useSelector((state) =>
-    state.heroesReducer.heroes.filter((e) => {
-      e.name.toLowerCase().includes(searchHero);
-    })
+    state.heroesReducer.heroes.filter((e) =>
+      e.name.toLowerCase().includes(searchHero)
+    )
   );
   const loading = useSelector((state) => state.heroesReducer.loading);
   const dispatch = useDispatch();
