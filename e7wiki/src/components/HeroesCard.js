@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFavourite } from "../store/actions/setFavourite";
 function HeroesCard(props) {
   const dispatch = useDispatch();
-  const favourite = useSelector((state) => state.heroesReducer.favourite);
+  const favourite = useSelector((state) => state.favouriteReducer.favourite);
 
   function addFavourite(data) {
     let duplicate = false;
@@ -55,9 +55,9 @@ function HeroesCard(props) {
               addFavourite(props.hero);
             }}
             type="button"
-            class="btn btn-danger"
+            className="btn btn-danger"
           >
-            <i class="fas fa-heart"></i> Favourite
+            <i className="fas fa-heart"></i> Favourite
           </button>
         </div>
       </div>

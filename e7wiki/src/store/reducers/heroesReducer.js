@@ -1,17 +1,20 @@
 const initialState = {
   heroes: [],
-  favourite: [],
-  heroDetail: [],
+  heroDetail: {},
+  loading: false,
+  search: "",
 };
 
 function heroesReducer(state = initialState, action) {
   switch (action.type) {
-    case "favourite/setFavourite":
-      return { ...state, favourite: state.favourite.concat(action.favourite) };
     case "heroes/setHeroes":
       return { ...state, heroes: action.heroes };
     case "heroDetail/setHeroDetail":
       return { ...state, heroDetail: action.heroDetail };
+    case "loading/setLoading":
+      return { ...state, loading: action.loading };
+    case "search/setSearch":
+      return { ...state, search: action.search };
     default:
       return state;
   }

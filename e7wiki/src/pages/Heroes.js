@@ -1,47 +1,59 @@
 import React, { useState, useEffect } from "react";
 import HeroesCard from "../components/HeroesCard";
-import useFetch from "../hooks/UseFetch";
 import Spinner from "react-spinkit";
 import { fetchHeroes } from "../store/actions/fetchHeroes";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Heroes() {
-  const heroes = useSelector((state) => state.heroesReducer.heroes);
+  const [searchHero, setSearchHero] = useState("");
+  const search = useSelector((state) => state.heroesReducer.search);
+  const heroes = useSelector((state) =>
+    state.heroesReducer.heroes.filter((e) => {
+      e.name.toLowerCase().includes(searchHero);
+    })
+  );
+  const loading = useSelector((state) => state.heroesReducer.loading);
   const dispatch = useDispatch();
 
-  // const [filterHero, setFilterHero] = useState("");
-
-  // const handleChange = (event) => {
-  //   setFilterHero(event.target.value);
-  // };
+  const handleChange = (event) => {
+    // dispatch(searchHero(event.target.value));
+    setSearchHero(event.target.value);
+  };
 
   useEffect(() => {
     dispatch(fetchHeroes());
   }, [dispatch]);
 
   // useEffect(() => {
-  //   const filteredName = heroList.filter((e) =>
-  //     e.name.toLowerCase().includes(filterHero)
+  //   const filterHero = heroes.filter((e) =>
+  //     e.name.toLowerCase().includes(search)
   //   );
-  //   setFilteredHeroList(filteredName);
-  // }, [filterHero, heroList, setFilteredHeroList]);
+  //   setFilterHero(filterHero);
+  // }, [filterHero, heroes, search]);
 
   // if (error) {
   //   return <h1>Internal Server Error</h1>;
   // }
-  // if (loading) {
-  //   return (
-  //     <div className=" h-100 d-flex justify-content-center align-items-center ">
-  //       <Spinner name="line-spin-fade-loader" color="white" />;
-  //     </div>
-  //   );
+  // if (heroes) {
+  //   setFilterHero(heroes);
   // }
+
+  if (loading) {
+    return (
+      <div className=" h-100 d-flex justify-content-center align-items-center ">
+        <Spinner name="line-spin-fade-loader" color="white" />;
+      </div>
+    );
+  } else {
+  }
+
   return (
     <>
       <h1 style={{ color: "#9f9f9c" }}>Hero List</h1>
       <div className="container">
+        {JSON.stringify(search)}
         <div className="row mb-4">
-          {/* <div className="col-md-3 col-sm-6">
+          <div className="col-md-12 col-sm-12">
             <div className="input-group mb-4">
               <div className="input-group-prepend">
                 <span className="input-group-text" id="filterHeroes">
@@ -54,11 +66,11 @@ export default function Heroes() {
                 placeholder="Heroes Name"
                 aria-label="Heroes Name"
                 aria-describedby="heroes-name"
-                value={filterHero}
+                value={searchHero}
                 onChange={handleChange}
               ></input>
             </div>
-          </div> */}
+          </div>
           {/* <div className="col-md-4 col-sm-6">
             {rarityFilter}
             <div className="input-group">
@@ -339,9 +351,10 @@ export default function Heroes() {
           </div> */}
         </div>
         <div className="row">
-          {heroes.map((hero) => {
-            return <HeroesCard key={hero.id} hero={hero} />;
-          })}
+          {heroes &&
+            heroes.map((hero) => {
+              return <HeroesCard key={hero.id} hero={hero} />;
+            })}
         </div>
       </div>
     </>

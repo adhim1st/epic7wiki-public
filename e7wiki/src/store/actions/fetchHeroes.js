@@ -1,5 +1,9 @@
 export const fetchHeroes = () => {
   return (dispatch, getState) => {
+    dispatch({
+      type: "loading/setLoading",
+      loading: true,
+    });
     fetch("https://api.epicsevendb.com/hero")
       .then((response) => {
         if (!response.ok) {
@@ -16,6 +20,12 @@ export const fetchHeroes = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally((_) => {
+        dispatch({
+          type: "loading/setLoading",
+          loading: false,
+        });
       });
   };
 };

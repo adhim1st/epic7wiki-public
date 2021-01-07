@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import FavouriteHeroCard from "../components/FavouriteHeroCard";
 export default function Home() {
-  const favourite = useSelector((state) => state.heroesReducer.favourite);
+  const favourite = useSelector((state) => state.favouriteReducer.favourite);
+
   return (
     <>
       <div className="container">
