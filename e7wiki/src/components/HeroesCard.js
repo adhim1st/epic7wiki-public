@@ -6,7 +6,15 @@ function HeroesCard(props) {
   const favourite = useSelector((state) => state.favourite);
 
   function addFavourite(data) {
-    dispatch(setFavourite(data));
+    let duplicate = false;
+    for (let i = 0; i < favourite.length; i++) {
+      if (favourite[i]._id === data._id) {
+        duplicate = true;
+      }
+    }
+    if (duplicate === false) {
+      dispatch(setFavourite(data));
+    }
   }
 
   return (
