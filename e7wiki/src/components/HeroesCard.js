@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setFavourite } from "../store/action";
+import { setFavourite } from "../store/actions/setFavourite";
 function HeroesCard(props) {
   const dispatch = useDispatch();
-  const favourite = useSelector((state) => state.favourite);
+  const favourite = useSelector((state) => state.heroesReducer.favourite);
 
   function addFavourite(data) {
     let duplicate = false;

@@ -2,48 +2,46 @@ import React, { useState, useEffect } from "react";
 import HeroesCard from "../components/HeroesCard";
 import useFetch from "../hooks/UseFetch";
 import Spinner from "react-spinkit";
+import { fetchHeroes } from "../store/actions/fetchHeroes";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Heroes() {
-  const {
-    heroList,
-    filteredHeroList,
-    setFilteredHeroList,
-    loading,
-    error,
-  } = useFetch();
+  const heroes = useSelector((state) => state.heroesReducer.heroes);
+  const dispatch = useDispatch();
 
-  const [filterHero, setFilterHero] = useState("");
-  const [rarityFilter, setRarityFilter] = useState("");
+  // const [filterHero, setFilterHero] = useState("");
 
-  const handleChange = (event) => {
-    setFilterHero(event.target.value);
-  };
-  const rarityChange = (event) => {
-    setRarityFilter(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setFilterHero(event.target.value);
+  // };
+
   useEffect(() => {
-    const filteredName = heroList.filter((e) =>
-      e.name.toLowerCase().includes(filterHero)
-    );
-    setFilteredHeroList(filteredName);
-  }, [filterHero, heroList, setFilteredHeroList]);
+    dispatch(fetchHeroes());
+  }, [dispatch]);
 
-  if (error) {
-    return <h1>Internal Server Error</h1>;
-  }
-  if (loading) {
-    return (
-      <div className=" h-100 d-flex justify-content-center align-items-center ">
-        <Spinner name="line-spin-fade-loader" color="white" />;
-      </div>
-    );
-  }
+  // useEffect(() => {
+  //   const filteredName = heroList.filter((e) =>
+  //     e.name.toLowerCase().includes(filterHero)
+  //   );
+  //   setFilteredHeroList(filteredName);
+  // }, [filterHero, heroList, setFilteredHeroList]);
+
+  // if (error) {
+  //   return <h1>Internal Server Error</h1>;
+  // }
+  // if (loading) {
+  //   return (
+  //     <div className=" h-100 d-flex justify-content-center align-items-center ">
+  //       <Spinner name="line-spin-fade-loader" color="white" />;
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <h1 style={{ color: "#9f9f9c" }}>Hero List</h1>
       <div className="container">
         <div className="row mb-4">
-          <div className="col-md-3 col-sm-6">
+          {/* <div className="col-md-3 col-sm-6">
             <div className="input-group mb-4">
               <div className="input-group-prepend">
                 <span className="input-group-text" id="filterHeroes">
@@ -60,7 +58,7 @@ export default function Heroes() {
                 onChange={handleChange}
               ></input>
             </div>
-          </div>
+          </div> */}
           {/* <div className="col-md-4 col-sm-6">
             {rarityFilter}
             <div className="input-group">
@@ -341,7 +339,7 @@ export default function Heroes() {
           </div> */}
         </div>
         <div className="row">
-          {filteredHeroList.map((hero) => {
+          {heroes.map((hero) => {
             return <HeroesCard key={hero.id} hero={hero} />;
           })}
         </div>
